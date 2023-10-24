@@ -24,7 +24,8 @@ public class NoteBookController {
 
     @GetMapping("/all")
     public List<NoteBook> all() {
-        return this.notebookRepository.findAll();
+        List<NoteBook> all = this.notebookRepository.findAll();
+        return all;
     }
 
     @PostMapping

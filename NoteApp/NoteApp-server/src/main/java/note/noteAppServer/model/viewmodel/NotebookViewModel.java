@@ -4,11 +4,10 @@ import jakarta.validation.constraints.NotNull;
 
 public class NotebookViewModel {
     private String id;
-
     @NotNull
     private String name;
-
     private int nbNotes;
+
 
     public String getId() {
         return id;
