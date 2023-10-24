@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { HousingLocation } from './housing-location';
+import {Component} from '@angular/core';
+import {HousingLocation} from "./housing-location";
 
 @Component({
   selector: 'app-root',
@@ -21,7 +21,7 @@ export class AppComponent {
     },
     {
       name: "A113 Transitional Housing",
-      city: "Santa Monica",
+      city: "Chicago",
       state: "CA",
       photo: "../assets/housing-2.jpg",
       availableUnits: 0,
@@ -30,7 +30,7 @@ export class AppComponent {
     },
     {
       name: "Warm Beds Housing Support",
-      city: "Juneau",
+      city: "Chicago",
       state: "AK",
       photo: "../assets/housing-3.jpg",
       availableUnits: 1,
@@ -39,9 +39,11 @@ export class AppComponent {
     }
   ];
 
-  selectedLocation: HousingLocation | undefined;// = this.housingLocationList[0];
-
+  selectedLocation: HousingLocation | undefined;
   updateSelectedLocation(location: HousingLocation) {
     this.selectedLocation = location;
   }
+
 }
+
+
