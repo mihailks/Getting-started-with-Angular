@@ -15,12 +15,10 @@ import java.util.List;
 @RequestMapping("/api/notebooks")
 @CrossOrigin
 public class NoteBookController {
-    private final NoteBookRepository notebookRepository;
     private final NoteBookService noteBookService;
     private final ModelMapper modelMapper;
 
-    public NoteBookController(NoteBookRepository notebookRepository, NoteBookService noteBookService, ModelMapper modelMapper) {
-        this.notebookRepository = notebookRepository;
+    public NoteBookController( NoteBookService noteBookService, ModelMapper modelMapper) {
         this.noteBookService = noteBookService;
         this.modelMapper = modelMapper;
     }
@@ -37,15 +35,11 @@ public class NoteBookController {
             throw new ValidationException();
         }
 
-        var notebookEntity = this.modelMapper.map(notebookViewModel, NoteBook.class);
-
-        this.notebookRepository.save(notebookEntity);
-
-        return notebookEntity;
+        return this.noteBookService.saveNewNoteBook(this.modelMapper.map(notebookViewModel, NoteBook.class));
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable String id) {
-        this.notebookRepository.deleteById(Long.valueOf(id));
+        this.noteBookService.deleteNoteBookById(Long.parseLong(id));
     }
 }

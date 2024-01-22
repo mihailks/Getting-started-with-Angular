@@ -7,3 +7,4 @@ values  (2, 'Cooking recipes'),
         (8, 'New notebook'),
         (9, 'New notebook'),
         (10, 'New notebook');
+

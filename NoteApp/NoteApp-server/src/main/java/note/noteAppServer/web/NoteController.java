@@ -1,16 +1,20 @@
 package note.noteAppServer.web;
 
 import jakarta.persistence.EntityNotFoundException;
+import note.noteAppServer.model.NoteBook;
 import note.noteAppServer.model.viewmodel.NoteViewModel;
 import note.noteAppServer.model.Note;
 import note.noteAppServer.repository.NoteBookRepository;
 import note.noteAppServer.repository.NoteRepository;
+import note.noteAppServer.service.NoteBookService;
+import note.noteAppServer.service.NoteService;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -18,12 +22,14 @@ import java.util.stream.Collectors;
 @CrossOrigin
 public class NoteController {
     private final NoteRepository noteRepository;
-    private final NoteBookRepository notebookRepository;
+    private final NoteBookService noteBookService;
+    private final NoteService noteService;
     private final ModelMapper modelMapper;
 
-    public NoteController(NoteRepository noteRepository, NoteBookRepository notebookRepository, ModelMapper modelMapper) {
+    public NoteController(NoteRepository noteRepository, NoteBookService noteBookService, NoteService noteService, ModelMapper modelMapper) {
         this.noteRepository = noteRepository;
-        this.notebookRepository = notebookRepository;
+        this.noteBookService = noteBookService;
+        this.noteService = noteService;
         this.modelMapper = modelMapper;
     }
 
@@ -38,9 +44,9 @@ public class NoteController {
 
     @GetMapping("/byId/{id}")
     public NoteViewModel byId(@PathVariable String id) {
-        var note = this.noteRepository.findById(Long.valueOf(id)).orElse(null);
+        Optional<Note> note = this.noteService.findNoteById(Long.parseLong(id));
 
-        if (note == null) {
+        if (note.isEmpty()) {
             throw new EntityNotFoundException();
         }
 
@@ -51,9 +57,9 @@ public class NoteController {
     public List<NoteViewModel> byNotebook(@PathVariable String notebookId) {
         List<Note> notes = new ArrayList<>();
 
-        var notebook = this.notebookRepository.findById(Long.valueOf(notebookId));
+        Optional<NoteBook> notebook = this.noteBookService.findById(Long.parseLong(notebookId));
         if (notebook.isPresent()) {
-            notes = this.noteRepository.findAllByNotebook(notebook.get());
+            notes = this.noteService.findAllByNotebook(notebook.get());
         }
 
         return notes.stream()
@@ -67,16 +73,11 @@ public class NoteController {
             throw new IllegalArgumentException();
         }
 
-        var noteEntity = this.modelMapper.map(noteCreateViewModel, Note.class);
-
-        // save note instance to db
-        this.noteRepository.save(noteEntity);
-
-        return noteEntity;
+        return noteService.saveNote(this.modelMapper.map(noteCreateViewModel, Note.class));
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable String id) {
-        this.noteRepository.deleteById(Long.valueOf(id));
+        this.noteService.deleteNoteById(id);
     }
 }

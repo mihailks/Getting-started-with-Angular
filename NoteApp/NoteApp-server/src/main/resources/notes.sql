@@ -1,6 +1,5 @@
 insert into notedb.notes (id, last_modified_on, text, title, notebook_id)
-values  (1, '2023-10-10 00:00:00.000000', 'asdfsdfsadfsdaf', 'Default', 2),
-        (32, '2023-10-10 00:00:00.000000', 'Milk
+values  (32, '2023-10-10 00:00:00.000000', 'Milk
 Butter', 'List for today', 3),
         (33, '2023-10-10 00:00:00.000000', 'Hertz 165', 'Speakers', 4),
         (34, '2023-10-03 00:00:00.000000', 'https://www.denon.com/en-us/product/archive-av-receivers/avr-x4400h/800219.html', 'Denon 4400H', 5),
