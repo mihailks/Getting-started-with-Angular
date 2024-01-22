@@ -4,6 +4,7 @@ import jakarta.validation.ValidationException;
 import note.noteAppServer.model.viewmodel.NotebookViewModel;
 import note.noteAppServer.model.NoteBook;
 import note.noteAppServer.repository.NoteBookRepository;
+import note.noteAppServer.service.NoteBookService;
 import org.modelmapper.ModelMapper;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -15,17 +16,18 @@ import java.util.List;
 @CrossOrigin
 public class NoteBookController {
     private final NoteBookRepository notebookRepository;
+    private final NoteBookService noteBookService;
     private final ModelMapper modelMapper;
 
-    public NoteBookController(NoteBookRepository notebookRepository, ModelMapper modelMapper) {
+    public NoteBookController(NoteBookRepository notebookRepository, NoteBookService noteBookService, ModelMapper modelMapper) {
         this.notebookRepository = notebookRepository;
+        this.noteBookService = noteBookService;
         this.modelMapper = modelMapper;
     }
 
     @GetMapping("/all")
     public List<NoteBook> all() {
-        List<NoteBook> all = this.notebookRepository.findAll();
-        return all;
+        return this.noteBookService.findAllNoteBooks();
     }
 
     @PostMapping

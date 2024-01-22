@@ -18,18 +18,11 @@ public class DBInit implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         if (noteBookRepository.count() == 0 && noteRepository.count() == 0) {
 
-            var defaultNoteBook = noteBookRepository.save(new NoteBook("Default"));
-            this.noteBookRepository.save(defaultNoteBook);
-
-            var defaultNote = noteRepository.save(new Note("Default"));
-            this.noteRepository.save(defaultNote);
-
-
+            noteBookRepository.save(new NoteBook("Default"));
+            noteRepository.save(new Note("Default"));
         }
-
-
     }
 }

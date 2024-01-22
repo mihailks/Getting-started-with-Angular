@@ -15,8 +15,9 @@ export class ApiService {
   private SAVE_NEW_NOTEBOOK = `${this.BASE_URL}/notebooks`;
   private DELETE_NOTEBOOK = `${this.BASE_URL}/notebooks`;
   private GET_ALL_NOTES = `${this.BASE_URL}/notes/all`;
-  private GET_ALL_NOTES_PER_NOTEBOOK = `${this.BASE_URL}/notes`;
+  private GET_ALL_NOTES_PER_NOTEBOOK = `${this.BASE_URL}/notes/byNotebook`;
   private DELETE_NOTE = `${this.BASE_URL}/notes`;
+  private SAVE_NEW_NOTE = `${this.BASE_URL}/notes`;
 
   constructor(private http: HttpClient) {
 
@@ -38,15 +39,19 @@ export class ApiService {
     return this.http.delete(`${this.DELETE_NOTEBOOK}/${notebookId}`);
   }
 
-  getAllNOtes():Observable<Note[]>{
+  getAllNOtes(): Observable<Note[]> {
     return this.http.get<Note[]>(this.GET_ALL_NOTES);
   }
 
-  getNotesByNotebook(notebookId: string): Observable<Note[]>{
-   return this.http.get<Note[]>(`${this.GET_ALL_NOTES_PER_NOTEBOOK}/${notebookId}`)
+  getNotesByNotebook(notebookId: number | null): Observable<Note[]> {
+    return this.http.get<Note[]>(`${this.GET_ALL_NOTES_PER_NOTEBOOK}/${notebookId}`)
   }
 
-  deleteNoteById(noteId: number | null):Observable<any> {
+  deleteNoteById(noteId: number | null): Observable<any> {
     return this.http.delete(`${this.DELETE_NOTE}/${noteId}`)
+  }
+
+  saveNewNote(newNote: Note):Observable<Note> {
+    return this.http.post<Note>(this.SAVE_NEW_NOTE, newNote);
   }
 }

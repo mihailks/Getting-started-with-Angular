@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class NoteViewModel {
     private String id;
@@ -18,7 +19,7 @@ public class NoteViewModel {
     @NotNull
     private String notebookId;
 
-    private LocalDate lastModifiedOn;
+    private LocalDateTime lastModifiedOn;
 
     public NoteViewModel() {
     }
@@ -59,11 +60,11 @@ public class NoteViewModel {
         return this;
     }
 
-    public LocalDate getLastModifiedOn() {
+    public LocalDateTime getLastModifiedOn() {
         return lastModifiedOn;
     }
 
-    public NoteViewModel setLastModifiedOn(LocalDate lastModifiedOn) {
+    public NoteViewModel setLastModifiedOn(LocalDateTime lastModifiedOn) {
         this.lastModifiedOn = lastModifiedOn;
         return this;
     }

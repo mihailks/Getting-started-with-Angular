@@ -6,6 +6,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "notes")
@@ -15,7 +16,7 @@ public class Note extends BaseEntity{
     private String text;
     @ManyToOne(fetch = FetchType.LAZY)
     private NoteBook notebook;
-    private LocalDate lastModifiedOn;
+    private LocalDateTime lastModifiedOn;
 
     public Note() {
     }
@@ -52,11 +53,11 @@ public class Note extends BaseEntity{
         return this;
     }
 
-    public LocalDate getLastModifiedOn() {
+    public LocalDateTime getLastModifiedOn() {
         return lastModifiedOn;
     }
 
-    public Note setLastModifiedOn(LocalDate lastModifiedOn) {
+    public Note setLastModifiedOn(LocalDateTime lastModifiedOn) {
         this.lastModifiedOn = lastModifiedOn;
         return this;
     }

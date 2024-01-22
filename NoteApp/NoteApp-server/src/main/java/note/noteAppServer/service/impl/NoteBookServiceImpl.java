@@ -1,8 +1,11 @@
 package note.noteAppServer.service.impl;
 
+import note.noteAppServer.model.NoteBook;
 import note.noteAppServer.repository.NoteBookRepository;
 import note.noteAppServer.service.NoteBookService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class NoteBookServiceImpl implements NoteBookService {
@@ -10,5 +13,10 @@ public class NoteBookServiceImpl implements NoteBookService {
 
     public NoteBookServiceImpl(NoteBookRepository noteBookRepository) {
         this.noteBookRepository = noteBookRepository;
+    }
+
+    @Override
+    public List<NoteBook> findAllNoteBooks() {
+        return noteBookRepository.findAll();
     }
 }

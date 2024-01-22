@@ -16,7 +16,6 @@ public class NoteBook extends BaseEntity {
     @JsonIgnore
     private List<Note> notes;
 
-
     public NoteBook() {
     }
 

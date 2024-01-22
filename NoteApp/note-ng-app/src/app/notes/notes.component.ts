@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Notebook} from "./model/notebook";
 import {ApiService} from "../shared/api.service";
 import {Note} from "./model/note";
+import {dateTimestampProvider} from "rxjs/internal/scheduler/dateTimestampProvider";
 
 @Component({
   selector: 'app-notes',
@@ -11,6 +12,8 @@ import {Note} from "./model/note";
 export class NotesComponent implements OnInit {
   notebooks: Notebook[] = [];
   notes: Note[] = [];
+  selectedNotebook: Notebook | undefined;
+  searchText: string;
 
   constructor(private apiService: ApiService) {
   }
@@ -101,5 +104,53 @@ export class NotesComponent implements OnInit {
         }
       )
     }
+  }
+
+  createNote(noteBookId: number | null | undefined) {
+    let newNote: Note = {
+      id: null,
+      title: "new note",
+      text: "content",
+      lastModifiedOn: new Date(),
+      notebookId: noteBookId
+    }
+    this.apiService.saveNewNote(newNote).subscribe(
+      res => {
+        newNote.id = res.id
+        this.notes.push(newNote);
+      },
+      err => {
+        alert("An error occurred while saving the note");
+      }
+    );
+
+  }
+
+  selectNotebook(notebook: Notebook) {
+    this.selectedNotebook = notebook;
+
+    this.apiService.getNotesByNotebook(notebook.id).subscribe(
+      res => {
+        this.notes = res;
+      },
+      err => {
+        alert("An error occurred while grabbing notes");
+      }
+    );
+  }
+
+  updateNote(updatedNote: Note) {
+    this.apiService.saveNewNote(updatedNote).subscribe(
+      res => {
+      },
+      err => {
+        alert("An error occurred while saving the note");
+      }
+    );
+  }
+
+  selectAllNotes() {
+    this.selectedNotebook = undefined;
+    this.getAllNotes();
   }
 }

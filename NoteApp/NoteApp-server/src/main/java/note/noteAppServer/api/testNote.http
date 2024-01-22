@@ -1,12 +1,7 @@
-# API COLORS
 
 GET {{host-url}}/colors/all
 
 ###
-
-
-
-# API NOTEBOOK MANAGEMENT
 
 GET {{host-url}}//notebooks/all
 
@@ -19,14 +14,12 @@ Content-Type: application/json
   "name": "Personal",
   "color": "#000000"
 }
+
 ###
 
 DELETE {{host-url}}/notebooks/3f6f9f6c-c3c2-40ba-a741-68615c6c8247
+
 ###
-
-
-
-# API NOTE MANAGEMENT
 
 GET {{host-url}}//notes/all
 
@@ -44,14 +37,12 @@ Content-Type: application/json
   "text": "Another Note Description",
   "notebookId": "1"
 }
+
 ###
 
 DELETE {{host-url}}//notes/5d6e01a8-ae61-4303-8385-28c0621cfaaf
 
 ###
-
-
-# FEEDBACK
 
 POST {{host-url}}//feedback
 Content-Type: application/json
@@ -61,4 +52,5 @@ Content-Type: application/json
   "email": "dan@gmail.com",
   "feedback": "Your app is so cool"
 }
+
 ###
